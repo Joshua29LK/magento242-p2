@@ -81,7 +81,7 @@ class Config implements ConfigInterface
         return str_replace(
             ['#{client_id}', '#{redirect_uri}', '#{locale}'],
             [$this->getApiKey(), $this->getCallBackUrl(), $this->getLocale()],
-            $this->scopeConfig->getValue(self::XML_PATH_AUTH_URL_PATTERN) ?? ''
+            $this->scopeConfig->getValue(self::XML_PATH_AUTH_URL_PATTERN)
         );
     }
 
@@ -106,16 +106,12 @@ class Config implements ConfigInterface
     /**
      * @inheritdoc
      */
-    public function getLogoutUrl(string $redirectUrl = '') : string
+    public function getLogoutUrl(string $accessToken, string $redirectUrl = '') : string
     {
-        // there is no success response with empty redirect url
-        if ($redirectUrl === '') {
-            $redirectUrl = 'self';
-        }
         return str_replace(
-            '#{redirect_uri}',
-            $redirectUrl,
-            $this->scopeConfig->getValue(self::XML_PATH_LOGOUT_URL_PATTERN) ?? ''
+            ['#{access_token}', '#{redirect_uri}'],
+            [$accessToken, $redirectUrl],
+            $this->scopeConfig->getValue(self::XML_PATH_LOGOUT_URL_PATTERN)
         );
     }
 
@@ -127,7 +123,7 @@ class Config implements ConfigInterface
         return str_replace(
             ['#{api_key}'],
             [$this->getApiKey()],
-            $this->scopeConfig->getValue(self::XML_PATH_IMAGE_URL_PATTERN) ?? ''
+            $this->scopeConfig->getValue(self::XML_PATH_IMAGE_URL_PATTERN)
         );
     }
 }

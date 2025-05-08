@@ -53,10 +53,11 @@ interface ConfigInterface
     /**
      * Return logout url for AdobeSdk.
      *
+     * @param string $accessToken
      * @param string $redirectUrl
      * @return string
      */
-    public function getLogoutUrl(string $redirectUrl = ''): string;
+    public function getLogoutUrl(string $accessToken, string $redirectUrl = ''): string;
 
     /**
      * Return image url for AdobeSdk.
